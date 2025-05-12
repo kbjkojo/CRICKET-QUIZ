@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <header>
+    <h1>Contact Us</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="quiz.html">Quiz</a></li>
+        <li><a href="results.html">Results</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Get in Touch</h2>
+      <p>We would love to hear from you! Use the form below to send us your questions, feedback, or suggestions.</p>
+
+      <!-- Simplified mailto form  -->
+      <form action="mailto:janiarya19@gmail.com" method="post" enctype="text/plain">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+      
+      <p class="form-note">Your message will open in your default email client.</p>
+    </section>
+
+    <section>
+      <h2>Why Reach Out?</h2>
+      <ul>
+        <li>Suggest a new quiz question</li>
+        <li>Report a bug or typo</li>
+        <li>Ask about collaboration</li>
+        <li>Provide feedback</li>
+      </ul>
+      <img src="images/feedback_icon.png" alt="Feedback icon" width="150">
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cricket Quiz Site</p>
+    <p>Follow us on <a href="https://www.instagram.com/cricketquiz_4" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+  </footer>
+</body>
+</html>

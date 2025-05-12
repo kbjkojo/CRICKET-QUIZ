@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cricket Quiz</title>
+  <link rel="stylesheet" href="quiz.css" />
+</head>
+<body>
+  <header>
+    <h1>Cricket Quiz</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="quiz.html" class="active">Quiz</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="quiz-container">
+    <div id="quiz-selector">
+      <h2>Test Your Cricket Knowledge</h2>
+      <button id="start-btn" class="btn">Start Quiz</button>
+    </div>
+
+    <div id="question-container" class="question-box" style="display:none;">
+      <!-- Questions will be injected here -->
+    </div>
+
+    <div class="progress-container" style="display:none;">
+      <div id="progress-bar" class="progress"></div>
+    </div>
+
+    <button id="next-btn" class="btn" style="display:none;">Next Question</button>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cricket Quiz</p>
+  </footer>
+
+  <script>
+    const questions = [
+      {
+        question: "1. How many players are in a cricket team?",
+        options: ["9", "10", "11", "12"],
+        answer: "11"
+      },
+      {
+        question: "2. What is the length of a cricket pitch in yards?",
+        options: ["18", "20", "22", "24"],
+        answer: "22"
+      },
+      {
+        question: "3. Which country won the first Cricket World Cup in 1975?",
+        options: ["Australia", "England", "West Indies", "India"],
+        answer: "West Indies"
+      },
+      {
+        question: "4. Who has scored the most runs in international cricket?",
+        options: ["Virat Kohli", "Ricky Ponting", "Sachin Tendulkar", "Brian Lara"],
+        answer: "Sachin Tendulkar"
+      },
+      {
+        question: "5. What is the highest individual score in Test cricket?",
+        options: ["375", "400*", "380", "404*"],
+        answer: "400*"
+      },
+      {
+        question: "6. Which bowler has taken the most Test wickets?",
+        options: ["Shane Warne", "Muttiah Muralitharan", "James Anderson", "Glenn McGrath"],
+        answer: "Muttiah Muralitharan"
+      },
+      {
+        question: "7. How many balls are in an over in cricket?",
+        options: ["4", "6", "8", "10"],
+        answer: "6"
+      },
+      {
+        question: "8. Which country won the 2019 ODI World Cup?",
+        options: ["Australia", "India", "England", "New Zealand"],
+        answer: "England"
+      },
+      {
+        question: "9. What is the nickname of the Australian cricket team?",
+        options: ["Lions", "Kangaroos", "Baggy Greens", "Aussies"],
+        answer: "Baggy Greens"
+      },
+      {
+        question: "10. Which player has won the most Man of the Match awards in ODIs?",
+        options: ["Virat Kohli", "Sanath Jayasuriya", "Sachin Tendulkar", "Jacques Kallis"],
+        answer: "Sanath Jayasuriya"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let userAnswers = [];
+
+    const quizSelector = document.getElementById('quiz-selector');
+    const questionContainer = document.getElementById('question-container');
+    const progressBar = document.getElementById('progress-bar');
+    const nextBtn = document.getElementById('next-btn');
+    const progressContainer = document.querySelector('.progress-container');
+    const startBtn = document.getElementById('start-btn');
+
+    startBtn.addEventListener('click', startQuiz);
+
+    function startQuiz() {
+      quizSelector.style.display = 'none';
+      questionContainer.style.display = 'block';
+      progressContainer.style.display = 'block';
+      nextBtn.style.display = 'inline-block';
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      questionContainer.innerHTML = `
+        <h2>Question ${currentQuestion + 1} of ${questions.length}</h2>
+        <p>${q.question}</p>
+        <div class="options-grid">
+          ${q.options.map(option => 
+            `<button class="option" onclick="selectOption(this, '${option}')">${option}</button>`
+          ).join('')}
+        </div>
+      `;
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const progress = ((currentQuestion) / questions.length) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+
+    function selectOption(selectedButton, selectedAnswer) {
+      const options = document.querySelectorAll('.option');
+      const currentQ = questions[currentQuestion];
+      
+      options.forEach(option => {
+        option.disabled = true;
+        if (option.textContent === currentQ.answer) {
+          option.classList.add('correct');
+        } else {
+          option.classList.add('incorrect');
+        }
+      });
+
+      userAnswers[currentQuestion] = selectedAnswer;
+      if (selectedAnswer === currentQ.answer) {
+        score++;
+      }
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+      } else {
+        localStorage.setItem('quizScore', score);
+        localStorage.setItem('totalQuestions', questions.length);
+        localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
+        localStorage.setItem('correctAnswers', JSON.stringify(questions.map(q => q.answer)));
+        window.location.href = 'results.html';
+      }
+    });
+  </script>
+</body>
+</html>
+

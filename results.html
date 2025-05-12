@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Results</title>
+  <link rel="stylesheet" href="quiz.css" />
+</head>
+<body>
+  <header>
+    <h1>Your Results</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="quiz.html">Retake Quiz</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Quiz Results</h2>
+      <div id="results-display"></div>
+      <a href="quiz.html" class="btn">Try Again</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cricket Quiz</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const score = localStorage.getItem('quizScore') || 0;
+      const totalQuestions = localStorage.getItem('totalQuestions') || 10;
+      const userAnswers = JSON.parse(localStorage.getItem('userAnswers') || '[]');
+      const correctAnswers = JSON.parse(localStorage.getItem('correctAnswers') || '[]');
+      
+      const resultsDisplay = document.getElementById('results-display');
+      resultsDisplay.innerHTML = `
+        <p>You scored <strong>${score}/${totalQuestions}</strong>!</p>
+        <div class="answers-review">
+          ${userAnswers.map((answer, index) => `
+            <div class="answer ${answer === correctAnswers[index] ? 'correct' : 'incorrect'}">
+              <p><strong>Question ${index + 1}:</strong> ${answer} 
+              ${answer === correctAnswers[index] ? '✓' : `✗ (Correct: ${correctAnswers[index]})`}</p>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
